@@ -66,12 +66,11 @@
         </div>
       </div>
     </nav>
-    <div>
-      <p>Hello this is {{links[activePage].text}} page</p>
-    </div>
+    <Intro v-bind:page="links[activePage]"></Intro>
+
     <script>
       const { createApp } = Vue;
-      createApp({
+      const app = createApp({
         data() {
           return {
             activePage: 0,
@@ -84,7 +83,14 @@
             ],
           };
         },
-      }).mount("#app");
+      });
+
+      app.component("intro", {
+        props: ["page"],
+        template: `<div><p>Hello this is {{page.text}} page</p></div>`,
+      });
+
+      app.mount("#app");
     </script>
   </body>
 </html>
