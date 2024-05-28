@@ -6,14 +6,9 @@ export default {
   name: 'App',
   data() {
     return {
-      textContent: 'hi there',
-      style: {
-        color: 'red',
-        fontSize: '30px',
-        num: 3
-      },
-      names: ['Bruce', 'clark', 'diana'],
-      name: 'jin'
+      formValue: {
+        name: ''
+      }
     }
   },
   methods: {
@@ -24,10 +19,9 @@ export default {
 }
 </script>
 <template>
-  <!-- <h1 v-bind:style="{ color: 'blue', ...style, color: 'green' }">{{ textContent }}</h1>
-  <p v-if="style.color === 'red'">the color is indeed red</p>
-  <p v-else>the color is not red</p> -->
-  <!-- <p v-for="name in names" v-bind:key="name">{{ name }}</p> -->
-  <p>{{ name }}</p>
-  <button v-on:click="changeName">change name</button>
+  <p>{{ formValue.name }}</p>
+  <form action="">
+    <label for="name">Name</label>
+    <input type="text" id="name" v-model="formValue.name" />
+  </form>
 </template>
