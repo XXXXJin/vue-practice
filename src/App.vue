@@ -13,7 +13,8 @@ export default {
         { text: 'Pricing', url: 'home.html' },
         { text: 'Contact', url: 'home.html' }
       ],
-      pageIndex: 0
+      pageIndex: 0,
+      name: 'jinahixu'
     }
   },
   methods: {
@@ -25,8 +26,10 @@ export default {
     NavBar,
     PageView
   },
-  provide: {
-    username: 'jinhaixu'
+  provide() {
+    return {
+      username: this.name
+    }
   }
 }
 </script>
