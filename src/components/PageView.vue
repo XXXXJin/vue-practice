@@ -1,6 +1,5 @@
 <script>
-// import { ref } from 'vue'
-// const textContent = ref('hi')
+import Hello from '@/components/Hello.vue'
 
 export default {
   name: 'App',
@@ -8,8 +7,10 @@ export default {
     return {
       formValue: {
         name: '',
-        location: ''
-      }
+        location: '',
+        age: null
+      },
+      heros: []
     }
   },
   methods: {
@@ -19,15 +20,23 @@ export default {
     handleSubmit() {
       console.log(this.formValue)
     }
+  },
+  components: {
+    Hello: Hello
   }
 }
 </script>
 <template>
   <p>{{ JSON.stringify(formValue, null, 2) }}</p>
+  <p>{{ JSON.stringify(heros, null, 2) }}</p>
   <form v-on:submit.prevent="handleSubmit">
     <div>
       <label for="name">Name</label>
-      <input type="text" id="name" class="border" v-model="formValue.name" />
+      <input type="text" id="name" class="border" v-model.trim.lazy="formValue.name" />
+    </div>
+    <div>
+      <label for="age">Age</label>
+      <input type="number" id="age" v-model.number="formValue.age" class="border" />
     </div>
     <div>
       <select name="location" id="location" v-model="formValue.location">
@@ -39,4 +48,9 @@ export default {
     </div>
     <button>submit</button>
   </form>
+
+  <div>
+    <button v-on:click="heros.push('wonder women')">add wonder women</button>
+  </div>
+  <Hello v-bind:name="formValue.name" id="helloConponent" />
 </template>
