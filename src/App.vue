@@ -1,6 +1,7 @@
 <script>
 import NavBar from '@/components/NavBar.vue'
 import PageView from './components/PageView.vue'
+import PopUp from '@/components/PopUp.vue'
 
 export default {
   name: 'App',
@@ -14,17 +15,22 @@ export default {
         { text: 'Contact', url: 'home.html' }
       ],
       pageIndex: 0,
-      name: 'jinahixu'
+      name: 'jinahixu',
+      showPopup: false
     }
   },
   methods: {
     changePageIndex(index) {
       this.pageIndex = index
+    },
+    closePopup(secret) {
+      if (secret === 'secret') this.showPopup = false
     }
   },
   components: {
     NavBar,
-    PageView
+    PageView,
+    PopUp
   },
   provide() {
     return {
@@ -40,6 +46,8 @@ export default {
     v-bind:pageIndex="pageIndex"
     v-bind:changePageIndex="changePageIndex"
   />
-  <PageView />
-  <h1>Hello world!!!</h1>
+  <!-- <PageView /> -->
+  <!-- <h1 v-show="showPopup" v-on:closePopup="showPopup = false">Hello world!!!</h1> -->
+  <PopUp v-show="showPopup" v-on:closePopup="closePopup"></PopUp>
+  <button v-on:click="showPopup = true">show the pop</button>
 </template>
