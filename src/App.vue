@@ -2,6 +2,7 @@
 import NavBar from '@/components/NavBar.vue'
 import PageView from './components/PageView.vue'
 import PopUp from '@/components/PopUp.vue'
+import SlotComponent from '@/components/SlotComponent.vue'
 
 export default {
   name: 'App',
@@ -30,7 +31,8 @@ export default {
   components: {
     NavBar,
     PageView,
-    PopUp
+    PopUp,
+    SlotComponent
   },
   provide() {
     return {
@@ -46,8 +48,13 @@ export default {
     v-bind:pageIndex="pageIndex"
     v-bind:changePageIndex="changePageIndex"
   />
-  <!-- <PageView /> -->
+  <PageView />
   <!-- <h1 v-show="showPopup" v-on:closePopup="showPopup = false">Hello world!!!</h1> -->
   <PopUp v-show="showPopup" v-on:closePopup="closePopup"></PopUp>
   <button v-on:click="showPopup = true">show the pop</button>
+  <SlotComponent>
+    <template v-slot:header>header slot</template>
+    <template v-slot:default>default slot</template>
+    <template v-slot:footer>footer slot</template>
+  </SlotComponent>
 </template>
