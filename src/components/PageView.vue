@@ -1,25 +1,26 @@
 <script>
 import Hello from '@/components/Hello.vue'
+import { ref } from 'vue'
 
 export default {
   name: 'App',
-  data() {
+  setup() {
+    const formValue = ref({
+      name: '321',
+      location: '456',
+      age: null
+    })
+    const heros = ref([])
     return {
-      formValue: {
-        name: '',
-        location: '',
-        age: null
-      },
-      heros: []
+      formValue,
+      heros
     }
   },
   methods: {
     changeName() {
-      this.name = 'bat man'
+      this.forValue.name = 'bat man'
     },
-    handleSubmit() {
-      console.log(this.formValue)
-    }
+    handleSubmit() {}
   },
   components: {
     Hello: Hello
