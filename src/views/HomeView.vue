@@ -4,7 +4,8 @@ import {reactive} from 'vue'
 const searchTerm = reactive({
   query: '',
   timeout: null,
-  result: []
+  result: null,
+  errorFlag: false
 })
 
 const handleSearch = () => {
@@ -15,12 +16,20 @@ const handleSearch = () => {
         searchTerm.result = result.data
         console.log(result.data)
       }).catch((err) => {
-        console.log(err)
+        searchTerm.errorFlag = true;
       });
     } else {
       searchTerm.result = null
     }
   }, 700);
+}
+
+const getWeather = (id) => {
+  axios.get(`http://api.weatherapi.com/v1/forecast.json?key=01310cb2121b4b32ab181800240306&q=id:${id}&days=3&aqi=no&alerts=no`).then((result) => {
+    console.log(result.data)
+  }).catch((err) => {
+    console.log(err)
+  });
 }
 </script>
 
@@ -37,14 +46,16 @@ const handleSearch = () => {
           v-on:input="handleSearch"
         />
       </div>
+      <p v-if="searchTerm.errorFlag" class="text-red-600 text-xs p-2">問題が発生しました。しばらくしてから再度お試しください。</p>
+      <p v-if="!searchTerm.errorFlag && searchTerm.result && searchTerm.result.length === 0" class="text-red-600 text-xs p-2">結果がありませんでした。違うキーワードで再度検索してください。</p>
     </form>
 
     <div class="bg-white my-2 rounded-lg shadow-lg">
       <template v-if="searchTerm && searchTerm.length !== 0">
         <div v-for="location in searchTerm.result" :key="location.id">
-          <button class="px-3 my-2 hover:font-bold w-full text-left">{{ `${location.country}, ${location.region}, ${location.name}` }}</button>
+          <button class="px-3 my-2 hover:font-bold w-full text-left" v-on:click="getWeather(location.id)">{{ `${location.country}, ${location.region}, ${location.name}` }}</button>
         </div>
-        </template>
+      </template>
     </div>
   </div>
 </template>
