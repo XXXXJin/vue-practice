@@ -13,7 +13,6 @@
           title="使い方の説明"
           v-on:click="toggleModel"
         ></i>
-        <!-- <i class="fa-solid fa-plus cursor-pointer hover:text-gray-600" title="場所を追加する"></i> -->
       </div>
       <BaseModal v-bind:isModelActice="isModelActice" v-on:close-modal="toggleModel">
         <h2 class="mb-2 text-xl font-bold tracking-tight text-gray-900">このサイトについて</h2>

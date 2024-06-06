@@ -11,7 +11,6 @@
     <h2>今日の天気予報</h2>
     <div class="flex gap-10 overflow-x-scroll w-full py-12">
       <div v-for="(hourData, index) in forecast.forecastday[0].hour" :key="index" class="">
-        <!-- {{ hourData.time }} -->
         <p class="whitespace-nowrap text-md text-center">
           {{ new Date(hourData.time).getHours() + '時' }}
         </p>
@@ -70,23 +69,19 @@ import { useRoute } from 'vue-router'
 const route = useRoute()
 const savedCities = ref([])
 const locationId = ref(route.params.id)
-// const isCityInLocalstorage = ref(false)
 const isCityInLocalstorage = computed(() => {
   return savedCities.value.indexOf(locationId.value) !== -1
 })
-
-// const locationId = route.params.id
 const dayInWeek = ['日', '月', '火', '水', '木', '金', '土']
 
+// ローカルストレージの都市のデータを取得する
 const getLocallySavedCities = () => {
   const localStorageSavedCities = localStorage.getItem('savedCities')
   console.log(localStorageSavedCities)
-  // localstorageに保存済みのデータが存在する場合savedCitiesを更新する
   if (localStorageSavedCities) {
     savedCities.value = JSON.parse(localStorageSavedCities)
   }
 }
-// ローカルロトレージに保存済みの
 getLocallySavedCities()
 
 // 都市のidをlocalstorageに保存する
@@ -96,7 +91,7 @@ const addCity = () => {
     localStorage.setItem('savedCities', JSON.stringify(savedCities.value))
   }
 }
-
+// 都市のidをlocalstorageから削除する
 const deleteCity = () => {
   if (savedCities.value.indexOf(locationId.value) !== -1) {
     const updatedCities = savedCities.value.filter((city) => city !== locationId.value)
@@ -104,7 +99,7 @@ const deleteCity = () => {
     localStorage.setItem('savedCities', JSON.stringify(updatedCities))
   }
 }
-
+// 天気予報データを取得する
 const getLocalWeather = async () => {
   try {
     const result = await axios.get(
@@ -116,5 +111,4 @@ const getLocalWeather = async () => {
   }
 }
 const { location, current, forecast } = await getLocalWeather()
-// console.log(locationWeather)
 </script>

@@ -12,8 +12,6 @@ const searchTerm = reactive({
 
 const router = useRouter()
 
-// const emit = defineEmits(['send-weather-data'])
-
 const previewCity = (id) => {
   console.log(id)
   router.push({
@@ -43,15 +41,6 @@ const handleSearch = () => {
     }
   }, 700)
 }
-
-// const getWeather = (id) => {
-//   axios.get(`http://api.weatherapi.com/v1/forecast.json?key=01310cb2121b4b32ab181800240306&q=id:${id}&days=3&aqi=no&alerts=no`).then((result) => {
-//     emit('send-weather-data', result.data)
-//     console.log(result.data)
-//   }).catch((err) => {
-//     console.log(err)
-//   })
-// }
 </script>
 
 <template>
