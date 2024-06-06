@@ -1,7 +1,7 @@
 <template>
   <div class="mt-12 mx-32">
     <div class="flex flex-col items-center">
-      <h1 class="text-3xl mt-6">{{ location.country }}</h1>
+      <h1 class="text-3xl mt-6">{{ location.name }}</h1>
       <p class="mt-3">{{ new Date().toLocaleString() }}</p>
       <p class="text-7xl my-6">{{ current.temp_c }}℃</p>
       <p>体感温度: {{ current.feelslike_c }}</p>
@@ -43,21 +43,72 @@
         <div>降水確率: {{ dayData.day.daily_chance_of_rain }}%</div>
       </div>
     </div>
+    <div class="mt-12 mb-20">
+      <div
+        v-if="!isCityInLocalstorage"
+        @:click="addCity"
+        class="text-center flex justify-center items-center gap-3 cursor-pointer text-green-800 hover:text-green-600"
+      >
+        <i class="fa-solid fa-plus"></i>保存する
+      </div>
+      <div
+        v-if="isCityInLocalstorage"
+        @:click="deleteCity"
+        class="text-center flex justify-center items-center gap-3 cursor-pointer text-red-800 hover:text-red-600"
+      >
+        <i class="fa-solid fa-trash"></i>削除する
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup>
 import axios from 'axios'
+import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
-const locationId = route.params.id
+const savedCities = ref([])
+const locationId = ref(route.params.id)
+// const isCityInLocalstorage = ref(false)
+const isCityInLocalstorage = computed(() => {
+  return savedCities.value.indexOf(locationId.value) !== -1
+})
+
+// const locationId = route.params.id
 const dayInWeek = ['日', '月', '火', '水', '木', '金', '土']
-console.log('locationid is', locationId)
+
+const getLocallySavedCities = () => {
+  const localStorageSavedCities = localStorage.getItem('savedCities')
+  console.log(localStorageSavedCities)
+  // localstorageに保存済みのデータが存在する場合savedCitiesを更新する
+  if (localStorageSavedCities) {
+    savedCities.value = JSON.parse(localStorageSavedCities)
+  }
+}
+// ローカルロトレージに保存済みの
+getLocallySavedCities()
+
+// 都市のidをlocalstorageに保存する
+const addCity = () => {
+  if (savedCities.value.indexOf(locationId.value) === -1) {
+    savedCities.value.push(locationId.value)
+    localStorage.setItem('savedCities', JSON.stringify(savedCities.value))
+  }
+}
+
+const deleteCity = () => {
+  if (savedCities.value.indexOf(locationId.value) !== -1) {
+    const updatedCities = savedCities.value.filter((city) => city !== locationId.value)
+    savedCities.value = updatedCities
+    localStorage.setItem('savedCities', JSON.stringify(updatedCities))
+  }
+}
+
 const getLocalWeather = async () => {
   try {
     const result = await axios.get(
-      `http://api.weatherapi.com/v1/forecast.json?key=01310cb2121b4b32ab181800240306&q=id:${locationId}&days=7&aqi=no&alerts=no`
+      `http://api.weatherapi.com/v1/forecast.json?key=01310cb2121b4b32ab181800240306&q=id:${locationId.value}&days=7&aqi=no&alerts=no`
     )
     return result.data
   } catch (err) {
