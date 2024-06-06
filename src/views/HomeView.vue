@@ -2,6 +2,7 @@
 import axios from 'axios'
 import { useRouter } from 'vue-router'
 import { reactive } from 'vue'
+import Citylist from '@/components/Citylist.vue'
 
 const searchTerm = reactive({
   query: '',
@@ -67,7 +68,7 @@ const handleSearch = () => {
       </p>
     </form>
 
-    <div class="bg-white my-2 rounded-lg shadow-lg">
+    <div class="bg-white my-2 rounded-lg shadow-lg mb-12">
       <template v-if="searchTerm && searchTerm.length !== 0">
         <div v-for="location in searchTerm.result" :key="location.id">
           <button
@@ -78,6 +79,12 @@ const handleSearch = () => {
           </button>
         </div>
       </template>
+    </div>
+    <div>
+      <Suspense>
+        <Citylist />
+        <template #fallback><p>loading...</p></template>
+      </Suspense>
     </div>
   </div>
 </template>
