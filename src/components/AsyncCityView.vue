@@ -22,7 +22,7 @@
     </div>
     <hr class="w-full h-1 mx-auto my-4 bg-gray-200 border-0 rounded md:my-10 dark:bg-gray-700" />
     <h2>週間天気予報</h2>
-    <div class="max-w-screen-md w-full py-12">
+    <div class="w-full py-12">
       <div
         v-for="(dayData, index) in forecast.forecastday"
         :key="index"
