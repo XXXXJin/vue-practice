@@ -71,7 +71,12 @@ const handleSearch = () => {
     if (searchTerm.query !== '') {
       axios
         .get(
-          `http://api.weatherapi.com/v1/search.json?key=01310cb2121b4b32ab181800240306&q=${searchTerm.query}`
+          `https://api.weatherapi.com/v1/search.json?key=01310cb2121b4b32ab181800240306&q=${searchTerm.query}`,
+          {
+            headers: {
+              'Access-Control-Allow-Origin': '*'
+            }
+          }
         )
         .then((result) => {
           searchTerm.result = result.data

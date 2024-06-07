@@ -102,7 +102,12 @@ const deleteCity = () => {
 const getLocalWeather = async () => {
   try {
     const result = await axios.get(
-      `http://api.weatherapi.com/v1/forecast.json?key=01310cb2121b4b32ab181800240306&q=id:${locationId.value}&days=7&aqi=no&alerts=no`
+      `https://api.weatherapi.com/v1/forecast.json?key=01310cb2121b4b32ab181800240306&q=id:${locationId.value}&days=7&aqi=no&alerts=no`,
+      {
+        headers: {
+          'Access-Control-Allow-Origin': '*'
+        }
+      }
     )
     return result.data
   } catch (err) {
