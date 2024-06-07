@@ -1,35 +1,13 @@
-# -
+## 目的
+vueの練習用に天気予報appを作成
 
-This template should help get you started developing with Vue 3 in Vite.
+## 学んだこと
+vue3のcompositionAPIの基本的な利用方法、vueでの非同期処理の方法
+Suspense、Teleport componenntの使い方など
 
-## Recommended IDE Setup
+## 利用スタック
+vue.js, vue router, tailwind, font-awosome
+weather api
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```
+## サイトリンク
+https://vue-practice-iota.vercel.app/
