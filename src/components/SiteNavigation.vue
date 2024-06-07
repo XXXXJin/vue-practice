@@ -17,11 +17,11 @@
       <BaseModal v-bind:isModelActice="isModelActice" v-on:close-modal="toggleModel">
         <h2 class="mb-2 text-xl font-bold tracking-tight text-gray-900">このサイトについて</h2>
         <p class="font-normal text-gray-700">
-          このアプリはvueの基本の使い方を学ぶために作成したもので、指定した場所の天気情報を取得することができます。
+          このアプリはvueの基本の使い方を学ぶために作成したものであり、指定した場所の天気情報を取得することができます。
         </p>
         <h2 class="mb-2 text-xl font-bold tracking-tight text-gray-900 mt-6">使い方</h2>
         <p class="font-normal text-gray-700">
-          ヘッダーのプラスボタンを押して、地名を選択してください。
+          検索ボックスで都市名を英語で検索してください。検索結果をクリックして、詳細ページへと遷移できます。詳細ページで都市をお気に入りに追加と削除が可能です。お気に入りに追加された都市はトップページにリストアップされます。
         </p>
       </BaseModal>
     </nav>

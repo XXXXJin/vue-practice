@@ -1,3 +1,47 @@
+<template>
+  <div class="container">
+    <form class="mt-6">
+      <div class="bg-white border rounded-lg shadow-lg flex items-center">
+        <i class="fa-solid fa-magnifying-glass p-2"></i>
+        <input
+          type="text"
+          placeholder="都市名を英語で入力"
+          class="rounded-r-lg p-2 border-0 outline-0 focus:ring-2 ring-inset w-full"
+          v-model="searchTerm.query"
+          v-on:input="handleSearch"
+        />
+      </div>
+      <p v-if="searchTerm.errorFlag" class="text-red-600 text-xs p-2">
+        問題が発生しました。しばらくしてから再度お試しください。
+      </p>
+      <p
+        v-if="!searchTerm.errorFlag && searchTerm.result && searchTerm.result.length === 0"
+        class="text-red-600 text-xs p-2"
+      >
+        結果がありませんでした。違うキーワードで再度検索してください。
+      </p>
+    </form>
+
+    <div class="bg-white my-2 rounded-lg shadow-lg mb-12">
+      <template v-if="searchTerm && searchTerm.length !== 0">
+        <div v-for="location in searchTerm.result" :key="location.id">
+          <button
+            class="px-3 my-2 hover:font-bold w-full text-left"
+            v-on:click="previewCity(location.id)"
+          >
+            {{ `${location.country}, ${location.region}, ${location.name}` }}
+          </button>
+        </div>
+      </template>
+    </div>
+    <div>
+      <Suspense>
+        <Citylist />
+        <template #fallback><p>loading...</p></template>
+      </Suspense>
+    </div>
+  </div>
+</template>
 <script setup>
 import axios from 'axios'
 import { useRouter } from 'vue-router'
@@ -43,48 +87,3 @@ const handleSearch = () => {
   }, 700)
 }
 </script>
-
-<template>
-  <div class="container">
-    <form class="mt-6">
-      <div class="bg-white border rounded-lg shadow-lg flex items-center">
-        <i class="fa-solid fa-magnifying-glass p-2"></i>
-        <input
-          type="text"
-          placeholder="Search for a place"
-          class="rounded-r-lg p-2 border-0 outline-0 focus:ring-2 ring-inset w-full"
-          v-model="searchTerm.query"
-          v-on:input="handleSearch"
-        />
-      </div>
-      <p v-if="searchTerm.errorFlag" class="text-red-600 text-xs p-2">
-        問題が発生しました。しばらくしてから再度お試しください。
-      </p>
-      <p
-        v-if="!searchTerm.errorFlag && searchTerm.result && searchTerm.result.length === 0"
-        class="text-red-600 text-xs p-2"
-      >
-        結果がありませんでした。違うキーワードで再度検索してください。
-      </p>
-    </form>
-
-    <div class="bg-white my-2 rounded-lg shadow-lg mb-12">
-      <template v-if="searchTerm && searchTerm.length !== 0">
-        <div v-for="location in searchTerm.result" :key="location.id">
-          <button
-            class="px-3 my-2 hover:font-bold w-full text-left"
-            v-on:click="previewCity(location.id)"
-          >
-            {{ `${location.country}, ${location.region}, ${location.name}` }}
-          </button>
-        </div>
-      </template>
-    </div>
-    <div>
-      <Suspense>
-        <Citylist />
-        <template #fallback><p>loading...</p></template>
-      </Suspense>
-    </div>
-  </div>
-</template>

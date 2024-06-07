@@ -1,30 +1,35 @@
 <template>
-  <div
-    v-for="(city, index) in citiesData"
-    :key="index"
-    class="flex justify-between items-center border border-gray-200 rounded-lg shadow hover:bg-gray-100 p-6 my-3 cursor-pointer"
-    @:click="goToCityView(index)"
-  >
-    <div>
-      <p class="text-3xl">{{ city.location.name }}</p>
-      <p class="text-sm">
-        {{
-          new Date(city.location.localtime).getHours() +
-          ':' +
-          new Date(city.location.localtime).getMinutes()
-        }}
-      </p>
-    </div>
-    <div>
-      <img :src="city.current.condition.icon" alt="" />
-    </div>
-    <div class="text-center">
-      <p class="text-2xl">{{ Math.round(city.current.temp_c) }}&deg;</p>
-      <div class="flex text-sm gap-2">
-        <p>最高:{{ Math.round(city.forecast.forecastday[0].day.maxtemp_c) }}&deg;</p>
-        <p>最低:{{ Math.round(city.forecast.forecastday[0].day.mintemp_c) }}&deg;</p>
+  <div>
+    <div v-if="citiesData.length === 0">お気に入り都市：なし</div>
+    <template v-else>
+      <div
+        v-for="(city, index) in citiesData"
+        :key="index"
+        class="flex justify-between items-center border border-gray-200 rounded-lg shadow hover:bg-gray-100 p-6 my-3 cursor-pointer"
+        @:click="goToCityView(index)"
+      >
+        <div>
+          <p class="text-3xl">{{ city.location.name }}</p>
+          <p class="text-sm">
+            {{
+              new Date(city.location.localtime).getHours() +
+              ':' +
+              String(new Date(city.location.localtime).getMinutes()).padStart(2, '0')
+            }}
+          </p>
+        </div>
+        <div>
+          <img :src="city.current.condition.icon" alt="" />
+        </div>
+        <div class="text-center">
+          <p class="text-2xl">{{ Math.round(city.current.temp_c) }}&deg;</p>
+          <div class="flex text-sm gap-2">
+            <p>最高:{{ Math.round(city.forecast.forecastday[0].day.maxtemp_c) }}&deg;</p>
+            <p>最低:{{ Math.round(city.forecast.forecastday[0].day.mintemp_c) }}&deg;</p>
+          </div>
+        </div>
       </div>
-    </div>
+    </template>
   </div>
 </template>
 

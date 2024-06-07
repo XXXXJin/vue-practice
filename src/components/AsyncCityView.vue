@@ -33,13 +33,12 @@
         </p>
         <img :src="dayData.day.condition.icon" alt="" />
         <div>
-          <div>
-            最高{{ Math.round(dayData.day.maxtemp_c) }}&deg; 最低{{
-              Math.round(dayData.day.mintemp_c)
-            }}&deg;
+          <div class="flex flex-col">
+            <span>最高: {{ Math.round(dayData.day.maxtemp_c) }}&deg;</span>
+            <span>最低: {{ Math.round(dayData.day.mintemp_c) }}&deg;</span>
           </div>
         </div>
-        <div>降水確率: {{ dayData.day.daily_chance_of_rain }}%</div>
+        <div>降水率: {{ dayData.day.daily_chance_of_rain }}%</div>
       </div>
     </div>
     <div class="mt-12 mb-20">
@@ -48,14 +47,14 @@
         @:click="addCity"
         class="text-center flex justify-center items-center gap-3 cursor-pointer text-green-800 hover:text-green-600"
       >
-        <i class="fa-solid fa-plus"></i>保存する
+        <i class="fa-solid fa-plus"></i>お気に入り追加
       </div>
       <div
         v-if="isCityInLocalstorage"
         @:click="deleteCity"
         class="text-center flex justify-center items-center gap-3 cursor-pointer text-red-800 hover:text-red-600"
       >
-        <i class="fa-solid fa-trash"></i>削除する
+        <i class="fa-solid fa-trash"></i>お気に入り削除
       </div>
     </div>
   </div>
